@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A Linha do Tempo do Aquecimento Global: Uma jornada imersiva pela história da crise climática, seus impactos e o futuro em nossas mãos.">
+    <title>Aquecimento Global: A Linha do Tempo Imersiva</title>
+    <link rel="stylesheet" href="style_v2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Carregando a Jornada Climática...</div>
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="parallax-bg" data-speed="0.3" style="background-image: url=('https://www.google.com/url?sa=i&url=https%3A%2F%2Fstarwalk.space%2Fpt%2Fnews%2Fwhat-is-space&psig=AOvVaw2VwixIgfPdKAbKNDadgydh&ust=1748651080499000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIi1hJz3yY0DFQAAAAAdAAAAABA')"></div>
+        <div class="container header-content">
+            <h1 class="main-title">Aquecimento Global</h1>
+            <h2 class="subtitle">A Linha do Tempo Imersiva</h2>
+            <p class="intro-text">Uma jornada visual e interativa pela história da crise climática, desde suas origens até os desafios e esperanças do nosso futuro.</p>
+            <a href="#timeline-start" class="btn btn-primary scroll-link">
+                <i class="fas fa-play"></i> Iniciar a Jornada
+            </a>
+        </div>
+        <div class="scroll-down-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </header>
+
+    <main>
+        <!-- Introduction Section -->
+        <section class="intro-section section">
+            <div class="container">
+                <h2>O Despertar da Consciência Climática</h2>
+                <p>O aquecimento global não é apenas um fenômeno científico – é a história da nossa relação com o planeta que chamamos de lar. Esta narrativa começa muito antes de entendermos as consequências de nossas ações, atravessa décadas de descobertas, negações e alertas, e continua a se desenrolar diante de nossos olhos, moldando o futuro de todas as espécies que compartilham a Terra.</p>
+                <p>Ao longo desta jornada temporal, você testemunhará como pequenas observações científicas se transformaram em um consenso global alarmante, como as atividades humanas alteraram fundamentalmente os sistemas naturais que sustentam a vida, e como estamos agora em uma encruzilhada decisiva para a história da humanidade.</p>
+                <blockquote class="quote">
+                    "Não herdamos a Terra de nossos ancestrais; nós a tomamos emprestada de nossos filhos."
+                    <cite>– Provérbio indígena americano</cite>
+                </blockquote>
+                <p>Esta não é apenas uma cronologia de eventos – é um chamado à compreensão, à reflexão e, acima de tudo, à ação.</p>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="timeline-section section" id="timeline-start">
+            <div class="container">
+                <div class="timeline-navigation">
+                    <button id="prev-era" class="nav-button" aria-label="Era Anterior"><i class="fas fa-chevron-left"></i></button>
+                    <h2 id="current-era-title">Os Primeiros Sinais (Séculos XVIII e XIX)</h2>
+                    <button id="next-era" class="nav-button" aria-label="Próxima Era"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="timeline-container">
+                    <!-- Era 1: Primeiros Sinais -->
+                    <div class="timeline-era" id="era-1">
+                        <div class="timeline-item" data-year="1712">
+                            <div class="timeline-icon"><i class="fas fa-industry"></i></div>
+                            <div class="timeline-content">
+                                <h3>Revolução Industrial Começa</h3>
+                                <p>Thomas Newcomen inventa o motor a vapor, iniciando a era da queima de carvão em larga escala.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>Ninguém imaginava que esta invenção alteraria não só a sociedade, mas o clima do planeta, liberando carbono armazenado por milhões de anos.</p>
+                                    <img src="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60" alt="Motor a vapor antigo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-year="1824">
+                            <div class="timeline-icon"><i class="fas fa-thermometer-half"></i></div>
+                            <div class="timeline-content">
+                                <h3>Efeito Estufa Descrito</h3>
+                                <p>Joseph Fourier descreve como a atmosfera retém calor, comparando-a a uma estufa.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>"A temperatura (da Terra) pode subir pela interposição da atmosfera..." - Fourier lançou a base teórica, muito antes das evidências.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-year="1861">
+                             <div class="timeline-icon"><i class="fas fa-flask"></i></div>
+                            <div class="timeline-content">
+                                <h3>Gases e Calor</h3>
+                                <p>John Tyndall demonstra experimentalmente que CO₂ e vapor d'água absorvem calor.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>Seus experimentos provaram o mecanismo físico por trás do efeito estufa, mostrando o papel crucial de certos gases.</p>
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Tyndall_apparatus_for_measuring_radiant_heat_absorption_by_gases.png/600px-Tyndall_apparatus_for_measuring_radiant_heat_absorption_by_gases.png" alt="Aparelho de Tyndall">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-year="1896">
+                             <div class="timeline-icon"><i class="fas fa-calculator"></i></div>
+                            <div class="timeline-content">
+                                <h3>Primeiro Cálculo Climático</h3>
+                                <p>Svante Arrhenius calcula o impacto do CO₂ na temperatura global, prevendo o aquecimento.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>Arrhenius estimou que dobrar o CO₂ aumentaria a temperatura em 5-6°C. Ironicamente, ele achou que isso seria benéfico.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Era 2: Primeiras Evidências -->
+                    <div class="timeline-era" id="era-2" style="display: none;">
+                        <div class="timeline-item" data-year="1938">
+                            <div class="timeline-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="timeline-content">
+                                <h3>Efeito Callendar</h3>
+                                <p>Guy Callendar correlaciona aumento de CO₂ e temperatura, mas é inicialmente ignorado.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>Analisando dados de 147 estações, Callendar foi um dos primeiros a apresentar evidências empíricas do aquecimento.</p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="timeline-item" data-year="1958">
+                            <div class="timeline-icon"><i class="fas fa-satellite-dish"></i></div>
+                            <div class="timeline-content">
+                                <h3>Curva de Keeling</h3>
+                                <p>Charles Keeling inicia medições em Mauna Loa, mostrando aumento constante de CO₂.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>A Curva de Keeling tornou-se um ícone da ciência climática, a prova inequívoca da nossa influência na atmosfera.</p>
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Mauna_Loa_CO2_monthly_mean_concentration.svg/600px-Mauna_Loa_CO2_monthly_mean_concentration.svg.png" alt="Curva de Keeling">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Adicionar mais itens da Era 2 -->
+                    </div>
+
+                    <!-- Era 3: Conscientização Global -->
+                     <div class="timeline-era" id="era-3" style="display: none;">
+                         <div class="timeline-item" data-year="1988">
+                            <div class="timeline-icon"><i class="fas fa-landmark"></i></div>
+                            <div class="timeline-content">
+                                <h3>Criação do IPCC</h3>
+                                <p>ONU estabelece o Painel Intergovernamental sobre Mudanças Climáticas.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>O IPCC tornou-se a principal autoridade científica, sintetizando o conhecimento para guiar políticas globais.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-year="1992">
+                            <div class="timeline-icon"><i class="fas fa-globe-americas"></i></div>
+                            <div class="timeline-content">
+                                <h3>ECO-92 (Rio)</h3>
+                                <p>Estabelecida a Convenção-Quadro da ONU sobre Mudança do Clima (UNFCCC).</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>A conferência no Rio de Janeiro foi um marco, criando a estrutura para a cooperação climática internacional.</p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="timeline-item" data-year="1997">
+                            <div class="timeline-icon"><i class="fas fa-file-signature"></i></div>
+                            <div class="timeline-content">
+                                <h3>Protocolo de Kyoto</h3>
+                                <p>Primeiro acordo internacional com metas vinculantes de redução de emissões.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>Embora limitado (sem participação dos EUA e focado em países ricos), foi um passo importante na ação climática.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Adicionar mais itens da Era 3 -->
+                    </div>
+
+                    <!-- Era 4: Crise Intensificada -->
+                    <div class="timeline-era" id="era-4" style="display: none;">
+                        <div class="timeline-item" data-year="2007">
+                            <div class="timeline-icon"><i class="fas fa-award"></i></div>
+                            <div class="timeline-content">
+                                <h3>Nobel da Paz</h3>
+                                <p>IPCC e Al Gore recebem o prêmio por seus esforços na conscientização climática.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>O prêmio destacou a urgência e a importância global do tema, elevando o debate público.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-year="2015">
+                            <div class="timeline-icon"><i class="fas fa-handshake"></i></div>
+                            <div class="timeline-content">
+                                <h3>Acordo de Paris</h3>
+                                <p>Marco histórico com compromisso global para limitar aquecimento abaixo de 2°C.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>Quase todas as nações concordaram em agir, com o objetivo ambicioso de limitar o aquecimento a 1.5°C.</p>
+                                    <img src="https://images.unsplash.com/photo-1604762524889-3e2fcc145683?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60" alt="Acordo de Paris">
+                                </div>
+                            </div>
+                        </div>
+                         <div class="timeline-item" data-year="2021">
+                            <div class="timeline-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                            <div class="timeline-content">
+                                <h3>IPCC: Alerta Vermelho</h3>
+                                <p>Sexto relatório afirma ser "inequívoco" o papel humano no aquecimento.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>A linguagem científica tornou-se mais assertiva do que nunca, refletindo a gravidade e a certeza da crise.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Adicionar mais itens da Era 4 -->
+                    </div>
+
+                     <!-- Era 5: O Futuro em Nossas Mãos -->
+                    <div class="timeline-era" id="era-5" style="display: none;">
+                        <div class="timeline-item" data-year="2030">
+                            <div class="timeline-icon"><i class="fas fa-road"></i></div>
+                            <div class="timeline-content">
+                                <h3>Encruzilhada Crítica</h3>
+                                <p>Prazo para reduzir emissões em 45% e manter a meta de 1.5°C alcançável.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>A década de 2020 é considerada decisiva. As ações tomadas (ou não) agora definirão o futuro climático.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-year="2050">
+                            <div class="timeline-icon"><i class="fas fa-balance-scale-right"></i></div>
+                            <div class="timeline-content">
+                                <h3>Meta de Emissões Líquidas Zero</h3>
+                                <p>Prazo para atingir neutralidade de carbono e estabilizar o aquecimento.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>Alcançar emissões líquidas zero significa equilibrar as emissões liberadas com as removidas da atmosfera.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-year="2100">
+                            <div class="timeline-icon"><i class="fas fa-question-circle"></i></div>
+                            <div class="timeline-content">
+                                <h3>Cenários Futuros</h3>
+                                <p>O nível de aquecimento dependerá das ações tomadas hoje. Podemos limitar a 1.5°C ou enfrentar um futuro catastrófico.</p>
+                                <button class="expand-btn" aria-label="Expandir detalhes">+</button>
+                                <div class="expanded-content">
+                                    <p>As projeções variam de um aquecimento gerenciável a um cenário com impactos irreversíveis e inabitabilidade em partes do planeta.</p>
+                                    <!-- Placeholder for interactive scenario comparison -->
+                                    <div class="scenario-comparison-placeholder">Compare os Cenários (Interativo)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Elements Section -->
+        <section class="interactive-section section">
+            <div class="container">
+                <h2>Explore os Dados</h2>
+                <div class="interactive-grid">
+                    <div class="interactive-item">
+                        <h3><i class="fas fa-chart-area"></i> Curva de CO₂ Animada</h3>
+                        <p>Veja a concentração de CO₂ subir dramaticamente desde a Revolução Industrial.</p>
+                        <!-- Placeholder for D3.js chart -->
+                        <div id="co2-chart-placeholder" class="chart-placeholder"></div>
+                    </div>
+                    <div class="interactive-item">
+                        <h3><i class="fas fa-globe"></i> Mapa de Impactos</h3>
+                        <p>Explore um globo 3D mostrando áreas afetadas pelo aumento do nível do mar e eventos extremos.</p>
+                        <!-- Placeholder for Three.js globe -->
+                        <div id="globe-placeholder" class="chart-placeholder"></div>
+                    </div>
+                    <div class="interactive-item">
+                        <h3><i class="fas fa-images"></i> Antes e Depois</h3>
+                        <p>Compare imagens de locais impactados pelas mudanças climáticas usando um slider interativo.</p>
+                        <!-- Placeholder for comparison slider -->
+                        <div class="comparison-slider-placeholder">Slider de Comparação</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="cta-section section">
+            <div class="container">
+                <h2>O Futuro Começa Agora</h2>
+                <p>A história do aquecimento global ainda está sendo escrita. Cada ação conta. Faça parte da solução.</p>
+                
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2024 Linha do Tempo Climática Imersiva. Informação para a Ação.</p>
+            
+        </div>
+    </footer>
+
+    <!-- Temperature Indicator -->
+    <div class="temperature-indicator" id="tempIndicator">
+        <div class="indicator-label">Aquecimento Global</div>
+        <div class="indicator-bar">
+            <div class="indicator-fill" id="tempFill"></div>
+        </div>
+        <div class="indicator-value" id="tempValue">+0.0°C</div>
+    </div>
+
+    <!-- Floating Action Button (Info Modal Trigger) -->
+    <button class="fab" id="infoFab" aria-label="Mais Informações">
+        <i class="fas fa-info"></i>
+    </button>
+
+    <!-- Info Modal -->
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Fechar Modal">&times;</button>
+            <div class="modal-header">
+                <h2><i class="fas fa-book-open"></i> Sobre Esta Jornada</h2>
+            </div>
+            <div class="modal-body">
+                <p>Esta linha do tempo interativa foi criada para visualizar a história complexa do aquecimento global de forma acessível e impactante. Usamos dados científicos e marcos históricos para ilustrar como chegamos à crise climática atual.</p>
+                <h4>Fontes Principais:</h4>
+                <ul>
+                    <li>Relatórios do IPCC (Painel Intergovernamental sobre Mudanças Climáticas)</li>
+                    <li>Dados da NASA, NOAA e Met Office</li>
+                    <li>Pesquisas científicas revisadas por pares</li>
+                </ul>
+                <p><strong>Lembre-se:</strong> A ciência climática é robusta e o consenso é claro. A ação é urgente.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary modal-close-btn">Entendi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include JS Libraries (Example: GSAP - requires installation/CDN) -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> -->
+    <!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
+
+    <script src="script_v2.js"></script>
+</body>
+</html>

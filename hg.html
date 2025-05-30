@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProjetoEco | Evolução das Queimadas e Meio Ambiente</title>
+    <meta name="description" content="Acompanhe a evolução das queimadas no Brasil e no mundo. Dados históricos, impactos ambientais e comparações entre passado e presente.">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Crimson+Text:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="hg.css">
+</head>
+<body>
+    <!-- Particles de fumaça -->
+    <div class="smoke-particles" id="smokeParticles"></div>
+
+    <!-- Cursor de fogo -->
+    <div class="fire-cursor">
+        <div class="flame flame-1"></div>
+        <div class="flame flame-2"></div>
+        <div class="flame flame-3"></div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="earth-fire">
+                <div class="earth">
+                    <div class="continents"></div>
+                    <div class="fire-points">
+                        <div class="fire-point point-1"></div>
+                        <div class="fire-point point-2"></div>
+                        <div class="fire-point point-3"></div>
+                        <div class="fire-point point-4"></div>
+                    </div>
+                </div>
+            </div>
+            <h2>Carregando Dados Ambientais...</h2>
+            <div class="loading-bar">
+                <div class="loading-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="brand-icon">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <span class="brand-text">ProjetoEco</span>
+            </div>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active" data-section="home">Início</a></li>
+                <li><a href="site2.html">Descarte Correto</a></li>
+                <li><a href="aquecimento_global_timeline_v2.html">Aquecimento Global</li>
+                <li><a href="terra_viva.html">Meio Ambiente</a></li>
+                <li><a href="kjdfs.html">Separação de Residuos</a></li>
+                <li><a href="index.html">Projeto Game</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="alert-btn" onclick="showAlertModal()">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Alertas</span>
+                </button>
+                <button class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg">
+            <div class="fire-gradient"></div>
+            <div class="smoke-overlay"></div>
+        </div>
+        
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="emergency-badge">
+                    <i class="fas fa-fire-extinguisher"></i>
+                    <span>Estado de Emergência Climática</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    <span class="title-line">A Evolução</span>
+                    <span class="title-line fire-text">das Queimadas</span>
+                    <span class="title-line">no Planeta</span>
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Acompanhe dados históricos e atuais sobre queimadas no Brasil e no mundo. 
+                    Entenda como o fogo tem transformado nossos ecossistemas e o que podemos 
+                    fazer para reverter essa tendência alarmante.
+                </p>
+                
+                <div class="critical-stats">
+                    <div class="stat-item critical">
+                        <div class="stat-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-number" data-target="75">0</span>
+                            <span class="stat-unit">mil</span>
+                            <span class="stat-label">Focos ativos hoje</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item warning">
+                        <div class="stat-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-number" data-target="9500">0</span>
+                            <span class="stat-unit">km²</span>
+                            <span class="stat-label">Área queimada este mês</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item danger">
+                        <div class="stat-icon">
+                            <i class="fas fa-lungs"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-number" data-target="420">0</span>
+                            <span class="stat-unit">ppm</span>
+                            <span class="stat-label">CO₂ na atmosfera</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-actions">
+                    <button class="btn-primary" onclick="scrollToSection('evolution')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Ver Dados Históricos</span>
+                    </button>
+                    <button class="btn-secondary" onclick="scrollToSection('comparison')">
+                        <i class="fas fa-balance-scale"></i>
+                        <span>Comparar Períodos</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="satellite-view">
+                    <div class="earth-satellite">
+                        <div class="earth-layer atmosphere"></div>
+                        <div class="earth-layer surface"></div>
+                        <div class="earth-layer fires"></div>
+                    </div>
+                    <div class="satellite-data">
+                        <div class="data-stream">
+                            <div class="data-point active">
+                                <span class="location">Amazônia</span>
+                                <span class="intensity">Alta</span>
+                            </div>
+                            <div class="data-point warning">
+                                <span class="location">Cerrado</span>
+                                <span class="intensity">Média</span>
+                            </div>
+                            <div class="data-point normal">
+                                <span class="location">Pantanal</span>
+                                <span class="intensity">Baixa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <span>Role para descobrir os dados</span>
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Evolução das Queimadas -->
+    <section id="evolution" class="evolution-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Análise Temporal</div>
+                <h2>Evolução das Queimadas (1985-2024)</h2>
+                <p>Dados históricos mostram o crescimento alarmante dos focos de incêndio nas últimas décadas</p>
+            </div>
+            
+            <div class="timeline-container">
+                <div class="timeline-controls">
+                    <button class="timeline-btn active" data-period="all">Todos os Anos</button>
+                    <button class="timeline-btn" data-period="1985-2000">1985-2000</button>
+                    <button class="timeline-btn" data-period="2001-2010">2001-2010</button>
+                    <button class="timeline-btn" data-period="2011-2024">2011-2024</button>
+                </div>
+                
+                <div class="evolution-chart">
+                    <canvas id="evolutionChart" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="evolution-insights">
+                    <div class="insight-item">
+                        <div class="insight-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Crescimento de 340%</h4>
+                            <p>Aumento nos focos de calor entre 1985 e 2024</p>
+                        </div>
+                    </div>
+                    
+                    <div class="insight-item">
+                        <div class="insight-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Pico em 2020</h4>
+                            <p>Ano com maior número de queimadas registradas</p>
+                        </div>
+                    </div>
+                    
+                    <div class="insight-item">
+                        <div class="insight-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Tendência Crescente</h4>
+                            <p>Últimos 5 anos mostram aceleração preocupante</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparação Passado vs Presente -->
+    <section id="comparison" class="comparison-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Análise Comparativa</div>
+                <h2>Passado vs Presente</h2>
+                <p>Compare os dados ambientais de diferentes períodos e entenda a evolução dos impactos</p>
+            </div>
+            
+            <div class="comparison-container">
+                <div class="time-period past">
+                    <div class="period-header">
+                        <h3>1985-2000</h3>
+                        <span class="period-label">Era Pré-Digital</span>
+                    </div>
+                    
+                    <div class="period-stats">
+                        <div class="period-stat">
+                            <div class="stat-value">45.2 mil</div>
+                            <div class="stat-label">Focos/ano (média)</div>
+                        </div>
+                        <div class="period-stat">
+                            <div class="stat-value">2.1 milhões</div>
+                            <div class="stat-label">Hectares queimados</div>
+                        </div>
+                        <div class="period-stat">
+                            <div class="stat-value">350 ppm</div>
+                            <div class="stat-label">CO₂ atmosférico</div>
+                        </div>
+                    </div>
+                    
+                    <div class="period-image">
+                        <div class="forest-past">
+                            <div class="tree-coverage past-coverage"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="comparison-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                
+                <div class="time-period present">
+                    <div class="period-header">
+                        <h3>2010-2024</h3>
+                        <span class="period-label">Era Atual</span>
+                    </div>
+                    
+                    <div class="period-stats">
+                        <div class="period-stat">
+                            <div class="stat-value">125.7 mil</div>
+                            <div class="stat-label">Focos/ano (média)</div>
+                        </div>
+                        <div class="period-stat">
+                            <div class="stat-value">8.9 milhões</div>
+                            <div class="stat-label">Hectares queimados</div>
+                        </div>
+                        <div class="period-stat">
+                            <div class="stat-value">420 ppm</div>
+                            <div class="stat-label">CO₂ atmosférico</div>
+                        </div>
+                    </div>
+                    
+                    <div class="period-image">
+                        <div class="forest-present">
+                            <div class="tree-coverage present-coverage"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comparison-highlights">
+                <div class="highlight-item increase">
+                    <div class="highlight-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <div class="highlight-content">
+                        <span class="highlight-value">+178%</span>
+                        <span class="highlight-label">Aumento nos focos de calor</span>
+                    </div>
+                </div>
+                
+                <div class="highlight-item critical">
+                    <div class="highlight-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="highlight-content">
+                        <span class="highlight-value">+324%</span>
+                        <span class="highlight-label">Área total queimada</span>
+                    </div>
+                </div>
+                
+                <div class="highlight-item danger">
+                    <div class="highlight-icon">
+                        <i class="fas fa-smog"></i>
+                    </div>
+                    <div class="highlight-content">
+                        <span class="highlight-value">+20%</span>
+                        <span class="highlight-label">CO₂ na atmosfera</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impactos Ambientais -->
+    <section id="impacts" class="impacts-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Consequências</div>
+                <h2>Impactos das Queimadas</h2>
+                <p>Entenda as consequências devastadoras das queimadas para o meio ambiente e sociedade</p>
+            </div>
+            
+            <div class="impacts-grid" id="impactsGrid">
+                <!-- Conteúdo carregado via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Regiões Críticas -->
+    <section id="regions" class="regions-section">
+        <div class="container">
+            <div class="regions-content">
+                <div class="regions-map">
+                    <h3>Regiões Mais Afetadas</h3>
+                    <div class="brazil-map">
+                        <div class="region amazonia" data-region="amazonia">
+                            <span class="region-name">Amazônia</span>
+                            <span class="region-fires">45.2k focos</span>
+                        </div>
+                        <div class="region cerrado" data-region="cerrado">
+                            <span class="region-name">Cerrado</span>
+                            <span class="region-fires">28.7k focos</span>
+                        </div>
+                        <div class="region pantanal" data-region="pantanal">
+                            <span class="region-name">Pantanal</span>
+                            <span class="region-fires">12.3k focos</span>
+                        </div>
+                        <div class="region caatinga" data-region="caatinga">
+                            <span class="region-name">Caatinga</span>
+                            <span class="region-fires">8.9k focos</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="region-details">
+                    <div class="region-info" id="regionInfo">
+                        <h3>Selecione uma região</h3>
+                        <p>Clique em uma região do mapa para ver informações detalhadas sobre as queimadas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tecnologias de Combate -->
+    <section id="technologies" class="technologies-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Inovação Tecnológica</div>
+                <h2>Tecnologias Avançadas de Combate</h2>
+                <p>Sistemas inteligentes e inovações tecnológicas na luta contra as queimadas</p>
+            </div>
+            
+            <div class="tech-showcase">
+                <div class="tech-item">
+                    <div class="tech-visual">
+                        <div class="satellite-animation">
+                            <div class="satellite-body">
+                                <div class="solar-panels left"></div>
+                                <div class="satellite-core">
+                                    <div class="antenna"></div>
+                                    <div class="sensor-array"></div>
+                                </div>
+                                <div class="solar-panels right"></div>
+                            </div>
+                            <div class="signal-waves">
+                                <div class="wave wave-1"></div>
+                                <div class="wave wave-2"></div>
+                                <div class="wave wave-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-content">
+                        <h3>Satélites de Monitoramento</h3>
+                        <p>Constelação de satélites AQUA, TERRA e SUOMI-NPP detectam focos de calor com precisão de 375m</p>
+                        <div class="tech-stats">
+                            <div class="tech-stat">
+                                <span class="stat-number">4</span>
+                                <span class="stat-label">Passagens/dia</span>
+                            </div>
+                            <div class="tech-stat">
+                                <span class="stat-number">95%</span>
+                                <span class="stat-label">Precisão</span>
+                            </div>
+                            <div class="tech-stat">
+                                <span class="stat-number">2h</span>
+                                <span class="stat-label">Tempo resposta</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-visual">
+                        <div class="drone-animation">
+                            <div class="drone-body">
+                                <div class="propeller prop-1"></div>
+                                <div class="propeller prop-2"></div>
+                                <div class="propeller prop-3"></div>
+                                <div class="propeller prop-4"></div>
+                                <div class="drone-camera"></div>
+                            </div>
+                            <div class="thermal-view">
+                                <div class="heat-spot spot-1"></div>
+                                <div class="heat-spot spot-2"></div>
+                                <div class="heat-spot spot-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-content">
+                        <h3>Drones Térmicos</h3>
+                        <p>Aeronaves não tripuladas com câmeras térmicas para detecção precoce e mapeamento de focos</p>
+                        <div class="tech-stats">
+                            <div class="tech-stat">
+                                <span class="stat-number">30km</span>
+                                <span class="stat-label">Alcance</span>
+                            </div>
+                            <div class="tech-stat">
+                                <span class="stat-number">4K</span>
+                                <span class="stat-label">Resolução térmica</span>
+                            </div>
+                            <div class="tech-stat">
+                                <span class="stat-number">6h</span>
+                                <span class="stat-label">Autonomia</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-visual">
+                        <div class="ai-brain">
+                            <div class="neural-network">
+                                <div class="neuron n-1"></div>
+                                <div class="neuron n-2"></div>
+                                <div class="neuron n-3"></div>
+                                <div class="neuron n-4"></div>
+                                <div class="neuron n-5"></div>
+                                <div class="connection c-1"></div>
+                                <div class="connection c-2"></div>
+                                <div class="connection c-3"></div>
+                                <div class="connection c-4"></div>
+                            </div>
+                            <div class="ai-processing">
+                                <div class="data-flow"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-content">
+                        <h3>Inteligência Artificial</h3>
+                        <p>Machine Learning para predição de risco, análise de padrões e otimização de recursos de combate</p>
+                        <div class="tech-stats">
+                            <div class="tech-stat">
+                                <span class="stat-number">85%</span>
+                                <span class="stat-label">Predição risco</span>
+                            </div>
+                            <div class="tech-stat">
+                                <span class="stat-number">1M</span>
+                                <span class="stat-label">Dados/hora</span>
+                            </div>
+                            <div class="tech-stat">
+                                <span class="stat-number">24/7</span>
+                                <span class="stat-label">Monitoramento</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prevenção e Educação -->
+    <section id="prevention" class="prevention-section">
+        <div class="container">
+            <div class="prevention-content">
+                <div class="prevention-info">
+                    <div class="section-badge">Prevenção</div>
+                    <h2>Educação e Conscientização</h2>
+                    <p>A prevenção é nossa melhor arma contra as queimadas. Conheça as principais causas e como evitá-las.</p>
+                    
+                    <div class="causes-breakdown">
+                        <h3>Principais Causas das Queimadas</h3>
+                        <div class="cause-item">
+                            <div class="cause-percentage" style="--percentage: 67%;">
+                                <span class="percentage-value">67%</span>
+                            </div>
+                            <div class="cause-info">
+                                <h4>Atividades Agropecuárias</h4>
+                                <p>Limpeza de pastagens e preparação de terrenos</p>
+                            </div>
+                        </div>
+                        
+                        <div class="cause-item">
+                            <div class="cause-percentage" style="--percentage: 18%;">
+                                <span class="percentage-value">18%</span>
+                            </div>
+                            <div class="cause-info">
+                                <h4>Causas Naturais</h4>
+                                <p>Raios, combustão espontânea e fatores climáticos</p>
+                            </div>
+                        </div>
+                        
+                        <div class="cause-item">
+                            <div class="cause-percentage" style="--percentage: 10%;">
+                                <span class="percentage-value">10%</span>
+                            </div>
+                            <div class="cause-info">
+                                <h4>Ações Criminosas</h4>
+                                <p>Incêndios intencionais e vandalismo ambiental</p>
+                            </div>
+                        </div>
+                        
+                        <div class="cause-item">
+                            <div class="cause-percentage" style="--percentage: 5%;">
+                                <span class="percentage-value">5%</span>
+                            </div>
+                            <div class="cause-info">
+                                <h4>Acidentes</h4>
+                                <p>Falhas humanas, equipamentos e descuido</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prevention-tips">
+                    <h3>Dicas de Prevenção</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-ban"></i>
+                            </div>
+                            <h4>Evite Queimadas</h4>
+                            <p>Nunca faça queimadas para limpeza de terrenos. Use métodos alternativos como compostagem e manejo integrado.</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-cigarette"></i>
+                            </div>
+                            <h4>Cuidado com Cigarros</h4>
+                            <p>Nunca jogue pontas de cigarro no chão. Uma pequena brasa pode iniciar um grande incêndio.</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <h4>Estacione com Cuidado</h4>
+                            <p>Evite estacionar sobre vegetação seca. O escapamento quente pode iniciar incêndios.</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <h4>Denuncie</h4>
+                            <p>Reporte focos de incêndio imediatamente. Ligue 193 (Bombeiros) ou use aplicativos de denúncia.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Soluções e Prevenção -->
+    <section id="solutions" class="solutions-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Ação Necessária</div>
+                <h2>Soluções e Prevenção</h2>
+                <p>Estratégias eficazes para combater e prevenir queimadas destrutivas</p>
+            </div>
+            
+            <div class="solutions-grid" id="solutionsGrid">
+                <!-- Conteúdo carregado via JavaScript -->
+            </div>
+            
+            <div class="global-initiatives">
+                <h3>Iniciativas Globais</h3>
+                <div class="initiatives-grid">
+                    <div class="initiative-card">
+                        <div class="initiative-flag">🇧🇷</div>
+                        <h4>Programa Queimada Controlada</h4>
+                        <p>IBAMA - Manejo integrado do fogo com técnicas de queima prescrita</p>
+                        <div class="initiative-impact">-35% incêndios</div>
+                    </div>
+                    
+                    <div class="initiative-card">
+                        <div class="initiative-flag">🇺🇸</div>
+                        <h4>NASA FIRMS</h4>
+                        <p>Sistema global de informações sobre incêndios em tempo real</p>
+                        <div class="initiative-impact">95% precisão</div>
+                    </div>
+                    
+                    <div class="initiative-card">
+                        <div class="initiative-flag">🇪🇺</div>
+                        <h4>Copernicus EMS</h4>
+                        <p>Monitoramento europeu de emergências e gestão de desastres</p>
+                        <div class="initiative-impact">24h resposta</div>
+                    </div>
+                    
+                    <div class="initiative-card">
+                        <div class="initiative-flag">🇦🇺</div>
+                        <h4>Australian Bushfire</h4>
+                        <p>Sistema nacional integrado de prevenção e combate</p>
+                        <div class="initiative-impact">-50% perdas</div>
+                    </div>
+                </div>
+            </div>
+            
+           
+
+    
+   
+
+    <!-- Modal de Material Educativo -->
+    <div class="modal" id="educationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Material Educativo</h3>
+                <button class="close-btn" onclick="closeModal('educationModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="education-options">
+                    <div class="edu-category">
+                        <h4>Material para Download</h4>
+                        <div class="edu-items">
+                            <div class="edu-item">
+                                <i class="fas fa-file-pdf"></i>
+                                <div class="edu-info">
+                                    <h5>Cartilha Completa de Prevenção</h5>
+                                    <p>Guia completo sobre prevenção de queimadas</p>
+                                </div>
+                                <a href="#" class="edu-download">Download</a>
+                            </div>
+                            
+                            <div class="edu-item">
+                                <i class="fas fa-file-powerpoint"></i>
+                                <div class="edu-info">
+                                    <h5>Apresentação para Palestras</h5>
+                                    <p>Slides prontos para apresentações educativas</p>
+                                </div>
+                                <a href="#" class="edu-download">Download</a>
+                            </div>
+                            
+                            <div class="edu-item">
+                                <i class="fas fa-images"></i>
+                                <div class="edu-info">
+                                    <h5>Kit de Imagens</h5>
+                                    <p>Fotografias e infográficos sobre queimadas</p>
+                                </div>
+                                <a href="#" class="edu-download">Download</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulador de Impacto Ambiental -->
+    <section id="simulator" class="simulator-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Ferramenta Interativa</div>
+                <h2>Simulador de Impacto Ambiental</h2>
+                <p>Teste diferentes cenários e veja o impacto das ações de combate às queimadas</p>
+            </div>
+            
+            <div class="impact-simulator">
+                <div class="simulator-controls">
+                    <div class="control-group">
+                        <label>Área reflorestada (hectares):</label>
+                        <input type="range" id="reforestArea" min="0" max="50000" value="5000" onchange="updateSimulation()">
+                        <span id="reforestValue">5,000</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Brigadas de combate:</label>
+                        <input type="range" id="fireBrigades" min="0" max="200" value="50" onchange="updateSimulation()">
+                        <span id="brigadesValue">50</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Programas educativos:</label>
+                        <input type="range" id="eduPrograms" min="0" max="100" value="25" onchange="updateSimulation()">
+                        <span id="programsValue">25</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Monitoramento por satélite (%):</label>
+                        <input type="range" id="satelliteMonitor" min="0" max="100" value="75" onchange="updateSimulation()">
+                        <span id="satelliteValue">75%</span>
+                    </div>
+                </div>
+                
+                <div class="simulation-results">
+                    <h4>Impacto Estimado das Ações</h4>
+                    <div class="result-cards">
+                        <div class="result-card positive">
+                            <i class="fas fa-fire"></i>
+                            <span class="result-value" id="fireReduction">-35%</span>
+                            <span class="result-label">Redução de Focos</span>
+                        </div>
+                        <div class="result-card positive">
+                            <i class="fas fa-leaf"></i>
+                            <span class="result-value" id="co2Reduction">-2.8 GT</span>
+                            <span class="result-label">CO₂ Evitado</span>
+                        </div>
+                        <div class="result-card positive">
+                            <i class="fas fa-paw"></i>
+                            <span class="result-value" id="speciesSaved">+8.5k</span>
+                            <span class="result-label">Espécies Protegidas</span>
+                        </div>
+                        <div class="result-card positive">
+                            <i class="fas fa-coins"></i>
+                            <span class="result-value" id="economicSaving">R$ 12 bi</span>
+                            <span class="result-label">Economia Gerada</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Ambiental Interativo -->
+    <section id="quiz" class="quiz-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Teste Seus Conhecimentos</div>
+                <h2>Quiz Ambiental Interativo</h2>
+                <p>Descubra o quanto você sabe sobre queimadas e meio ambiente</p>
+            </div>
+            
+            <div class="environmental-quiz">
+                <div class="quiz-container" id="quizContainer">
+                    <div class="quiz-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="quizProgress"></div>
+                        </div>
+                        <span class="progress-text">Pergunta <span id="currentQuestion">1</span> de <span id="totalQuestions">8</span></span>
+                    </div>
+                    
+                    <div class="quiz-question" id="quizQuestion">
+                        <h3>Qual é a principal causa das queimadas na Amazônia?</h3>
+                    </div>
+                    
+                    <div class="quiz-answers" id="quizAnswers">
+                        <button class="quiz-option" onclick="selectAnswer(0)">A) Raios e fenômenos naturais</button>
+                        <button class="quiz-option" onclick="selectAnswer(1)">B) Ação humana para desmatamento</button>
+                        <button class="quiz-option" onclick="selectAnswer(2)">C) Aquecimento global</button>
+                        <button class="quiz-option" onclick="selectAnswer(3)">D) Secas prolongadas</button>
+                    </div>
+                    
+                    <div class="quiz-explanation" id="quizExplanation" style="display: none;">
+                        <div class="explanation-content">
+                            <h4>Explicação</h4>
+                            <p>A explicação aparecerá aqui após responder.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-actions">
+                        <button class="btn-secondary" id="nextQuestion" onclick="nextQuizQuestion()" style="display: none;">
+                            Próxima Pergunta
+                        </button>
+                        <button class="btn-primary" id="finishQuiz" onclick="finishQuiz()" style="display: none;">
+                            Ver Resultado Final
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="quiz-results" id="quizResults" style="display: none;">
+                    <div class="result-score">
+                        <div class="score-circle">
+                            <span class="score-percentage" id="scorePercentage">0%</span>
+                        </div>
+                        <h4 id="scoreMessage">Parabéns!</h4>
+                        <p id="scoreDescription">Você demonstrou bom conhecimento sobre o tema.</p>
+                    </div>
+                    
+                    <div class="quiz-recommendations">
+                        <h4>Suas Recomendações Personalizadas</h4>
+                        <ul id="recommendations">
+                            <li>Continue se informando sobre questões ambientais</li>
+                            <li>Participe de ações de reflorestamento</li>
+                            <li>Divulgue informações sobre prevenção de queimadas</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn-primary" onclick="restartQuiz()">
+                        <i class="fas fa-redo"></i>
+                        Refazer Quiz
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Monitoramento em Tempo Real -->
+    <section id="live-monitoring" class="live-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge live-badge">AO VIVO</div>
+                <h2>Monitoramento em Tempo Real</h2>
+                <p>Dados atualizados sobre a situação das queimadas no Brasil e no mundo</p>
+            </div>
+            
+            <div class="news-ticker">
+                <div class="ticker-label">URGENTE</div>
+                <div class="ticker-content" id="newsTicker">
+                    <span>🔥 Novo foco de grande intensidade detectado na Amazônia • 🌡️ Temperatura recorde no Pantanal • 💨 Qualidade do ar crítica em 18 cidades • 🚁 100 brigadistas mobilizados no Cerrado</span>
+                </div>
+            </div>
+            
+            <div class="live-dashboard">
+                <div class="dashboard-grid">
+                    <div class="live-metric critical">
+                        <div class="metric-header">
+                            <i class="fas fa-fire live-icon"></i>
+                            <span>Focos Ativos Agora</span>
+                        </div>
+                        <div class="metric-value" id="liveFires">76,847</div>
+                        <div class="metric-change increase">+2,156 nas últimas 6h</div>
+                        <div class="metric-location">Maior concentração: Rondônia</div>
+                    </div>
+                    
+                    <div class="live-metric warning">
+                        <div class="metric-header">
+                            <i class="fas fa-wind live-icon"></i>
+                            <span>Qualidade do Ar</span>
+                        </div>
+                        <div class="metric-value" id="airQuality">Perigosa</div>
+                        <div class="metric-change critical">AQI: 387 (Muito Prejudicial)</div>
+                        <div class="metric-location">Pior situação: Cuiabá, MT</div>
+                    </div>
+                    
+                    <div class="live-metric danger">
+                        <div class="metric-header">
+                            <i class="fas fa-thermometer-full live-icon"></i>
+                            <span>Temperatura Média</span>
+                        </div>
+                        <div class="metric-value" id="temperature">+3.1°C</div>
+                        <div class="metric-change warning">Acima da média histórica</div>
+                        <div class="metric-location">Máxima: 47°C em Porto Velho</div>
+                    </div>
+                    
+                    <div class="live-metric critical">
+                        <div class="metric-header">
+                            <i class="fas fa-cloud-rain live-icon"></i>
+                            <span>Índice de Precipitação</span>
+                        </div>
+                        <div class="metric-value" id="rainfall">-73%</div>
+                        <div class="metric-change critical">Muito abaixo da média</div>
+                        <div class="metric-location">Seca severa: 12 estados</div>
+                    </div>
+                </div>
+                
+                <div class="emergency-alerts">
+                    <h4>Alertas de Emergência Ativa</h4>
+                    <div class="alert-feed" id="emergencyFeed">
+                        <div class="emergency-alert critical">
+                            <div class="alert-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="alert-content">
+                                <span class="alert-time">3 min atrás</span>
+                                <h5>Incêndio de Grande Proporção</h5>
+                                <p>Foco com mais de 500 hectares detectado em área protegida no Mato Grosso. Equipes de emergência acionadas.</p>
+                                <span class="alert-location">Chapada dos Guimarães, MT</span>
+                            </div>
+                        </div>
+                        
+                        <div class="emergency-alert warning">
+                            <div class="alert-icon">
+                                <i class="fas fa-wind"></i>
+                            </div>
+                            <div class="alert-content">
+                                <span class="alert-time">8 min atrás</span>
+                                <h5>Condições Meteorológicas Críticas</h5>
+                                <p>Ventos fortes e umidade baixa favorecem propagação de incêndios em 6 estados.</p>
+                                <span class="alert-location">Centro-Oeste e Norte</span>
+                            </div>
+                        </div>
+                        
+                        <div class="emergency-alert info">
+                            <div class="alert-icon">
+                                <i class="fas fa-helicopter"></i>
+                            </div>
+                            <div class="alert-content">
+                                <span class="alert-time">15 min atrás</span>
+                                <h5>Operação de Combate em Andamento</h5>
+                                <p>3 aeronaves e 45 brigadistas combatem incêndio na Terra Indígena Xingu.</p>
+                                <span class="alert-location">Xingu, PA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Alertas -->
+    <div class="modal" id="alertModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Alertas de Queimadas</h3>
+                <button class="close-btn" onclick="closeModal('alertModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert-list" id="alertList">
+                    <!-- Alertas carregados via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Doação -->
+    <div class="modal" id="donationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Apoie a Causa Ambiental</h3>
+                <button class="close-btn" onclick="closeModal('donationModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="donation-options">
+                    <div class="org-item">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'><circle cx='25' cy='25' r='20' fill='%234CAF50'/><text x='25' y='30' text-anchor='middle' fill='white' font-size='12'>WWF</text></svg>" alt="WWF">
+                        <div class="org-info">
+                            <h4>WWF Brasil</h4>
+                            <p>Proteção da vida selvagem e combate às mudanças climáticas</p>
+                        </div>
+                        <a href="#" class="donate-btn">Doar</a>
+                    </div>
+                    <div class="org-item">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'><circle cx='25' cy='25' r='20' fill='%23FF6B35'/><text x='25' y='30' text-anchor='middle' fill='white' font-size='10'>SOS</text></svg>" alt="SOS Amazônia">
+                        <div class="org-info">
+                            <h4>SOS Amazônia</h4>
+                            <p>Preservação da floresta amazônica e comunidades locais</p>
+                        </div>
+                        <a href="#" class="donate-btn">Doar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <span class="brand-text">ProjetoEco</span>
+                    <p>Monitoramento e conscientização sobre queimadas e meio ambiente.</p>
+                    
+                    
+                </div>
+                
+                
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 ProjetoEco. Dados para conscientização ambiental.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="hg.js"></script>
+</body>
+</html>

@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProjectEco | Separação Consciente de Resíduos</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Playfair+Display:wght@700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #2874a6;
+            --accent: #58d68d;
+            --accent-dark: #28b463;
+            --accent-light: #82e0aa;
+            --text: #f5f5f5;
+            --text-dark: #333;
+            --highlight: #f4d03f;
+            --organic: #8e44ad;
+            --recyclable: #3498db;
+            --hazardous: #e74c3c;
+            --landfill: #7f8c8d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Efeitos de fundo */
+        .recycling-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0.8;
+        }
+
+        .recycling-pattern {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%2358d68d" fill-opacity="0.1" d="M30,10 Q50,5 70,10 T90,30 Q95,50 90,70 T70,90 Q50,95 30,90 T10,70 Q5,50 10,30 T30,10 Z"></path></svg>');
+            background-size: 100px;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: rgba(26, 82, 118, 0.9);
+            border-bottom: 1px solid rgba(88, 214, 141, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 1rem 5%;
+            background-color: rgba(26, 82, 118, 0.98);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .logo-icon {
+            color: var(--accent);
+            font-size: 1.8rem;
+            transition: transform 0.5s ease;
+        }
+
+        .logo:hover .logo-icon {
+            transform: rotate(360deg);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            color: var(--highlight);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--highlight);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Botões */
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: var(--text-dark);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(88, 214, 141, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(88, 214, 141, 0.6);
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+        }
+
+        .secondary-button {
+            border: 2px solid var(--highlight);
+            color: var(--highlight);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .secondary-button:hover {
+            background-color: rgba(244, 208, 63, 0.1);
+        }
+
+        /* Seção Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+            padding-top: 6rem;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            background: linear-gradient(to right, var(--text), var(--highlight));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .hero-image-container {
+            position: absolute;
+            right: 5%;
+            width: 50%;
+            max-width: 800px;
+            height: 80vh;
+            perspective: 1000px;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.6s forwards, float 8s ease-in-out infinite 1.6s;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+            transform-style: preserve-3d;
+        }
+
+        .recycling-animation {
+            position: absolute;
+            right: 10%;
+            bottom: 10%;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: url('https://cdn-icons-png.flaticon.com/512/3652/3652191.png');
+            background-size: cover;
+            box-shadow: 0 0 50px rgba(88, 214, 141, 0.5);
+            animation: rotate 30s linear infinite;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        /* Contador de impacto */
+        .impact-counter {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            background: rgba(26, 82, 118, 0.8);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(88, 214, 141, 0.3);
+            backdrop-filter: blur(5px);
+            display: flex;
+            gap: 2rem;
+        }
+
+        .impact-item {
+            text-align: center;
+        }
+
+        .impact-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--highlight);
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .impact-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Seção de categorias */
+        .categories {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            text-align: center;
+        }
+
+        .categories-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-card.organic {
+            border-top: 5px solid var(--organic);
+        }
+
+        .category-card.recyclable {
+            border-top: 5px solid var(--recyclable);
+        }
+
+        .category-card.hazardous {
+            border-top: 5px solid var(--hazardous);
+        }
+
+        .category-card.landfill {
+            border-top: 5px solid var(--landfill);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-card.organic .category-icon {
+            color: var(--organic);
+        }
+
+        .category-card.recyclable .category-icon {
+            color: var(--recyclable);
+        }
+
+        .category-card.hazardous .category-icon {
+            color: var(--hazardous);
+        }
+
+        .category-card.landfill .category-icon {
+            color: var(--landfill);
+        }
+
+        .category-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-card p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .category-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .category-card.organic .category-link {
+            color: var(--organic);
+        }
+
+        .category-card.recyclable .category-link {
+            color: var(--recyclable);
+        }
+
+        .category-card.hazardous .category-link {
+            color: var(--hazardous);
+        }
+
+        .category-card.landfill .category-link {
+            color: var(--landfill);
+        }
+
+        .category-link:hover {
+            transform: translateX(5px);
+        }
+
+        /* Seção de urgência */
+        .urgency {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .urgency::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23e74c3c" fill-opacity="0.05" d="M50,10 L60,40 L90,50 L60,60 L50,90 L40,60 L10,50 L40,40 Z"></path></svg>');
+            background-size: 100px;
+            animation: rotate 120s linear infinite;
+            z-index: 0;
+        }
+
+        .urgency-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .urgency-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--highlight);
+        }
+
+        .urgency-text p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .urgency-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--hazardous);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--highlight);
+        }
+
+        .stat-card p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .urgency-image {
+            position: relative;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: rotate(-5deg);
+            transition: transform 0.5s ease;
+        }
+
+        .urgency-image:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .urgency-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .urgency-image:hover img {
+            transform: scale(1.1);
+        }
+
+        .urgency-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(26, 82, 118, 0.8), transparent);
+        }
+
+        /* Seção de compostagem */
+        .composting {
+            padding: 8rem 5%;
+            background-color: var(--text);
+            color: var(--text-dark);
+        }
+
+        .composting-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .composting-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .step-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .step-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .step-card:hover .step-image img {
+            transform: scale(1.1);
+        }
+
+        .step-content {
+            padding: 1.5rem;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: var(--organic);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .step-card p {
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        /* Seção de reciclagem */
+        .recycling {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recycling::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle fill="%233498db" fill-opacity="0.1" cx="50" cy="50" r="40"></circle></svg>');
+            background-size: 100px;
+            animation: rotate 60s linear infinite;
+            z-index: 0;
+        }
+
+        .recycling-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .recycling h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: var(--highlight);
+        }
+
+        .recycling-tips {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .tip-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--recyclable);
+        }
+
+        .tip-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--recyclable);
+            color: var(--text);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .tip-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-card p {
+            opacity: 0.9;
+        }
+
+        /* Seção de materiais */
+        .materials {
+            padding: 6rem 5%;
+            background-color: var(--text);
+            color: var(--text-dark);
+        }
+
+        .materials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .materials-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 3rem;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .materials-table th, .materials-table td {
+            padding: 1.2rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .materials-table th {
+            background: var(--primary);
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .materials-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .materials-table tr:hover {
+            background: rgba(88, 214, 141, 0.1);
+        }
+
+        .material-type {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .organic-type {
+            background: rgba(142, 68, 173, 0.1);
+            color: var(--organic);
+        }
+
+        .recyclable-type {
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--recyclable);
+        }
+
+        .hazardous-type {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--hazardous);
+        }
+
+        .landfill-type {
+            background: rgba(127, 140, 141, 0.1);
+            color: var(--landfill);
+        }
+
+        /* Seção de newsletter */
+        .newsletter {
+            padding: 6rem 5%;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(244, 208, 63, 0.05) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: 0;
+        }
+
+        .newsletter-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: white;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(51, 51, 51, 0.6);
+        }
+
+        .newsletter-button {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            padding: 0 2rem;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .newsletter-button:hover {
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            padding: 4rem 5% 2rem;
+            position: relative;
+        }
+
+        .footer-wave {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%2358d68d"></path><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%2358d68d"></path><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%2358d68d"></path></svg>');
+            background-size: cover;
+            transform: translateY(-99px);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--highlight);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-column p {
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column a {
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-column a:hover {
+            color: var(--highlight);
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: var(--highlight);
+            color: var(--text-dark);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(88, 214, 141, 0.2);
+            opacity: 0.6;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Animações */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsividade */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 4rem;
+            }
+            
+            .urgency-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .urgency-image {
+                order: -1;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .urgency-text h2 {
+                font-size: 2.5rem;
+            }
+            
+            .recycling h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 5%;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--primary);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3rem;
+                transition: left 0.3s ease;
+            }
+            
+            nav ul.active {
+                left: 0;
+            }
+            
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 8rem;
+                padding-bottom: 4rem;
+            }
+            
+            .hero-content {
+                margin-bottom: 3rem;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .hero-image-container {
+                position: relative;
+                right: auto;
+                width: 100%;
+                height: 300px;
+                margin: 0 auto;
+            }
+            
+            .impact-counter {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                margin-top: 2rem;
+                justify-content: center;
+                width: 100%;
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                border-radius: 15px;
+            }
+            
+            .newsletter-input, .newsletter-button {
+                padding: 1rem;
+                width: 100%;
+            }
+            
+            .materials-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Efeito de fundo natural -->
+    <div class="recycling-bg"></div>
+    <div class="recycling-pattern"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <a href="#" class="logo">
+            <i class="fas fa-recycle logo-icon"></i>
+            Projeto<span>Eco</span>
+        </a>
+        <nav>
+            <ul id="nav-menu">
+                <li><a href="#home">Início</a></li>
+                <li><a href="hg.html">Históricos de Queimadas</a></li>
+                <li><a href="aquecimento_global_timeline_v2.html">Aquecimento Global</li>
+                <li><a href="terra_viva.html">Meio Ambiente</a></li>
+                <li><a href="site2.html">Descarte Correto</a></li>
+                <li><a href="index.html">Projeto Game</a></li>
+            </ul>
+        </nav>
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Separação Consciente de Resíduos</h1>
+            <p>Aprenda a separar corretamente seus resíduos e contribua para um planeta mais limpo e sustentável.</p>
+            <div class="hero-buttons">
+                <a href="#categories" class="cta-button">
+                    <i class="fas fa-trash-alt"></i> Como Separar
+                </a>
+                <a href="#composting" class="secondary-button">
+                    <i class="fas fa-leaf"></i> Compostagem
+                </a>
+            </div>
+        </div>
+        <div class="hero-image-container">
+            <img src="Lixo hospitalar_ riscos, tipos e como é feita a coleta.jpeg" alt="Separação de lixo" class="hero-image">
+        </div>
+        <div class="recycling-animation"></div>
+        <div class="impact-counter">
+            <div class="impact-item">
+                <div class="impact-number" id="waste-produced">0</div>
+                <div class="impact-label">kg de lixo produzidos por pessoa/ano</div>
+            </div>
+            <div class="impact-item">
+                <div class="impact-number" id="recycling-rate">0</div>
+                <div class="impact-label">% é reciclado no Brasil</div>
+            </div>
+            <div class="impact-item">
+                <div class="impact-number" id="compostable">0</div>
+                <div class="impact-label">% do lixo é orgânico</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categorias Section -->
+    <section class="categories" id="categories">
+        <div class="categories-container">
+            <div class="section-header">
+                <h2>Categorias de Resíduos</h2>
+                <p>Conheça as principais categorias de resíduos e como separá-las corretamente para destinação adequada.</p>
+            </div>
+            
+            <div class="categories-grid">
+                <div class="category-card organic">
+                    <div class="category-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Orgânicos</h3>
+                    <p>Restos de alimentos, cascas de frutas e legumes, borra de café, folhas secas e outros materiais biodegradáveis.</p>
+                    <a href="#composting" class="category-link">
+                        Saiba mais <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="category-card recyclable">
+                    <div class="category-icon">
+                        <i class="fas fa-recycle"></i>
+                    </div>
+                    <h3>Recicláveis</h3>
+                    <p>Papel, plástico, metal e vidro limpos e secos. Devem ser separados por tipo para facilitar a reciclagem.</p>
+                    <a href="#recycling" class="category-link">
+                        Saiba mais <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="category-card hazardous">
+                    <div class="category-icon">
+                        <i class="fas fa-biohazard"></i>
+                    </div>
+                    <h3>Perigosos</h3>
+                    <p>Pilhas, baterias, lâmpadas, eletrônicos, medicamentos vencidos e produtos químicos. Requerem descarte especial.</p>
+                    <a href="#materials" class="category-link">
+                        Saiba mais <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="category-card landfill">
+                    <div class="category-icon">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <h3>Rejeitos</h3>
+                    <p>Materiais que não podem ser reciclados ou compostados, como papel higiênico, fraldas e absorventes usados.</p>
+                    <a href="#materials" class="category-link">
+                        Saiba mais <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Urgency Section -->
+    <section class="urgency" id="urgency">
+        <div class="urgency-content">
+            <div class="urgency-text">
+                <h2>Por Que Separar Seu Lixo?</h2>
+                <p>A separação correta dos resíduos é fundamental para reduzir o impacto ambiental, economizar recursos naturais e melhorar a qualidade de vida nas cidades.</p>
+                
+                <div class="urgency-stats">
+                    <div class="stat-card">
+                        <h3>2.500</h3>
+                        <p>Lixões a céu aberto ainda existem no Brasil, contaminando solo e água</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>30%</h3>
+                        <p>Do lixo reciclável é perdido por contaminação com orgânicos</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>80%</h3>
+                        <p>Do lixo que vai para aterros poderia ser reciclado ou compostado</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>100 anos</h3>
+                        <p>É o tempo que uma garrafa PET leva para se decompor</p>
+                    </div>
+                </div>
+            </div>
+            <div class="urgency-image">
+                <img src="https://images.unsplash.com/photo-1558640476-437a2b9438a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Lixão a céu aberto">
+                <div class="news-date">PROBLEMA GLOBAL</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Composting Section -->
+    <section class="composting" id="composting">
+        <div class="composting-container">
+            <div class="section-header">
+                <h2>Compostagem Doméstica</h2>
+                <p>Aprenda a transformar seus resíduos orgânicos em adubo de qualidade para plantas e jardins.</p>
+            </div>
+            
+            <div class="composting-steps">
+                <div class="step-card">
+                    <div class="step-image">
+                        <img src="https://images.unsplash.com/photo-1589927986089-35812388d1f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Separação de orgânicos">
+                    </div>
+                    <div class="step-content">
+                        <span class="step-number">PASSO 1</span>
+                        <h3>Separe os Resíduos</h3>
+                        <p>Separe cascas de frutas e legumes, borra de café, folhas secas e outros materiais orgânicos. Evite carnes, laticínios e óleos.</p>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-image">
+                        <img src="How to Compost_ A Comprehensive Guide.jpeg" alt="Composteira doméstica">
+                    </div>
+                    <div class="step-content">
+                        <span class="step-number">PASSO 2</span>
+                        <h3>Escolha o Método</h3>
+                        <p>Use composteiras domésticas (com minhocas ou não), ou faça uma pilha de compostagem no jardim, se tiver espaço.</p>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-image">
+                        <img src="klaf.jpeg" alt="Misturando compostagem">
+                    </div>
+                    <div class="step-content">
+                        <span class="step-number">PASSO 3</span>
+                        <h3>Monte Sua Composteira</h3>
+                        <p>Intercale camadas de materiais úmidos (restos de comida) com materiais secos (folhas, serragem) para equilibrar a umidade.</p>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-image">
+                        <img src="Outdoors.jpeg" alt="Adubo pronto">
+                    </div>
+                    <div class="step-content">
+                        <span class="step-number">PASSO 4</span>
+                        <h3>Mantenha e Use</h3>
+                        <p>Revolva periodicamente e em 2-3 meses terá um rico adubo para suas plantas. O líquido pode ser diluído e usado como fertilizante.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recycling Section -->
+    <section class="recycling" id="recycling">
+        <div class="recycling-content">
+            <h2>Dicas para Reciclagem Eficiente</h2>
+            <p>Maximize o potencial de reciclagem dos materiais com estas práticas simples:</p>
+            
+            <div class="recycling-tips">
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-hand-sparkles"></i>
+                    </div>
+                    <h3>Limpe os Materiais</h3>
+                    <p>Lave embalagens de alimentos para remover resíduos antes de reciclar. Isso evita contaminação e melhora a qualidade do material.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-compress-arrows-alt"></i>
+                    </div>
+                    <h3>Reduza o Volume</h3>
+                    <p>Amasse latas e garrafas PET, dobre caixas de papelão. Isso economiza espaço no transporte e facilita o processamento.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <h3>Separe por Tipo</h3>
+                    <p>Diferencie papel, plástico, vidro e metal. Alguns locais exigem separação por cor ou tipo específico para otimizar a reciclagem.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <h3>Conheça as Regras Locais</h3>
+                    <p>Verifique com a prefeitura ou cooperativas quais materiais são aceitos na sua região, pois as regras podem variar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Materials Section -->
+    <section class="materials" id="materials">
+        <div class="materials-container">
+            <div class="section-header">
+                <h2>Guia Completo de Separação</h2>
+                <p>Saiba exatamente onde descartar cada tipo de material para garantir a destinação correta.</p>
+            </div>
+            
+            <table class="materials-table">
+                <thead>
+                    <tr>
+                        <th>Material</th>
+                        <th>Categoria</th>
+                        <th>Como Separar</th>
+                        <th>Onde Descartar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cascas de frutas/legumes</td>
+                        <td><span class="material-type organic-type">Orgânico</span></td>
+                        <td>Livre de plásticos ou outros contaminantes</td>
+                        <td>Composteira doméstica ou coleta de orgânicos</td>
+                    </tr>
+                    <tr>
+                        <td>Garrafas PET</td>
+                        <td><span class="material-type recyclable-type">Reciclável</span></td>
+                        <td>Lavar, secar e amassar para reduzir volume</td>
+                        <td>Coleta seletiva ou pontos de entrega voluntária</td>
+                    </tr>
+                    <tr>
+                        <td>Pilhas e baterias</td>
+                        <td><span class="material-type hazardous-type">Perigoso</span></td>
+                        <td>Não abrir ou danificar, armazenar em local seco</td>
+                        <td>Pontos de coleta específicos em supermercados ou lojas</td>
+                    </tr>
+                    <tr>
+                        <td>Papel higiênico usado</td>
+                        <td><span class="material-type landfill-type">Rejeito</span></td>
+                        <td>Não reciclável, deve estar seco</td>
+                        <td>Lixo comum (aterro sanitário)</td>
+                    </tr>
+                    <tr>
+                        <td>Embalagens longa vida</td>
+                        <td><span class="material-type recyclable-type">Reciclável</span></td>
+                        <td>Lavar, secar e preferencialmente abrir para facilitar</td>
+                        <td>Coleta seletiva ou pontos específicos para este material</td>
+                    </tr>
+                    <tr>
+                        <td>Óleo de cozinha</td>
+                        <td><span class="material-type hazardous-type">Perigoso</span></td>
+                        <td>Esfriar e armazenar em garrafa PET fechada</td>
+                        <td>Pontos de coleta específicos ou entrega voluntária</td>
+                    </tr>
+                    <tr>
+                        <td>Eletrônicos</td>
+                        <td><span class="material-type hazardous-type">Perigoso</span></td>
+                        <td>Remover baterias se possível, limpar superficialmente</td>
+                        <td>Ecopontos ou programas de logística reversa</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="newsletter-content">
+          
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-wave"></div>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>ProjetoEco</h3>
+                <p>Nossa missão é educar e capacitar pessoas para a separação correta de resíduos, promovendo a economia circular e a sustentabilidade ambiental.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                
+            </div>
+            <div class="footer-column">
+                
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 ProjetoEco - Separação Consciente de Resíduos.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const navMenu = document.getElementById('nav-menu');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navMenu.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Scroll header
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Dados reais sobre resíduos
+            const wasteData = {
+                wastePerPerson: 379,    // kg por pessoa/ano no Brasil
+                recyclingRate: 4,       // % reciclado no Brasil
+                compostable: 50         // % de orgânicos no lixo
+            };
+
+            // Função para formatar números grandes
+            function formatNumber(num) {
+                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
+
+            // Animação dos contadores
+            function animateValue(id, start, end, duration, onComplete) {
+                const obj = document.getElementById(id);
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const value = Math.floor(progress * (end - start) + start);
+                    
+                    // Exibe números brutos durante a animação
+                    obj.textContent = value; 
+                    
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    } else if (onComplete) {
+                        onComplete();
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            // Inicia contadores quando visíveis
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Lixo produzido por pessoa/ano (379kg)
+                        animateValue('waste-produced', 0, wasteData.wastePerPerson, 2000, () => {
+                            document.getElementById('waste-produced').textContent = wasteData.wastePerPerson;
+                        });
+                        
+                        // Taxa de reciclagem no Brasil (4%)
+                        animateValue('recycling-rate', 0, wasteData.recyclingRate, 2000, () => {
+                            document.getElementById('recycling-rate').textContent = wasteData.recyclingRate + '%';
+                        });
+                        
+                        // Porcentagem de orgânicos no lixo (50%)
+                        animateValue('compostable', 0, wasteData.compostable, 2000, () => {
+                            document.getElementById('compostable').textContent = wasteData.compostable + '%';
+                        });
+                        
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            observer.observe(document.querySelector('.hero'));
+
+            // Formulário de newsletter
+            const newsletterForm = document.getElementById('newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const email = this.querySelector('input').value;
+                    
+                    // Simulação de envio
+                    this.innerHTML = `
+                        <div style="padding: 1rem; text-align: center; color: var(--highlight); font-weight: bold;">
+                            <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <div>Obrigado por se juntar à nossa causa!</div>
+                        </div>
+                    `;
+                    
+                    // Reset após 5 segundos
+                    setTimeout(() => {
+                        this.innerHTML = `
+                            <input type="email" placeholder="Seu melhor e-mail" class="newsletter-input" required>
+                            <button type="submit" class="newsletter-button">
+                                <i class="fas fa-paper-plane"></i> Assinar
+                            </button>
+                        `;
+                    }, 5000);
+                });
+            }
+            
+            // Animação de scroll suave
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    if (this.getAttribute('href') === '#') return;
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        // Fecha menu mobile se aberto
+                        if (navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                        }
+                        
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Efeito parallax no hero image
+            const heroImage = document.querySelector('.hero-image');
+            if (heroImage) {
+                window.addEventListener('scroll', function() {
+                    const scrollPosition = window.pageYOffset;
+                    heroImage.style.transform = `translateY(${scrollPosition * 0.3}px) rotate(${scrollPosition * 0.05}deg)`;
+                });
+            }
+            
+            // Rotação do símbolo de reciclagem
+            const recyclingSymbol = document.querySelector('.recycling-animation');
+            if (recyclingSymbol) {
+                window.addEventListener('scroll', function() {
+                    const scrollPosition = window.pageYOffset;
+                    recyclingSymbol.style.transform = `rotate(${scrollPosition * 0.2}deg)`;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

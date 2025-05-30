@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 DeepSeek Ultimate Challenge 🌟</title>
+    <style>
+        :root {
+            --player-color: #4CAF50;
+            --coin-color: gold;
+            --obstacle-color: #f44336;
+            --enemy-color: #9C27B0;
+            --powerup-color: #00BCD4;
+            --bg-gradient: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--bg-gradient);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            touch-action: none;
+        }
+
+        #game-container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+        }
+
+        #player {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: var(--player-color);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--player-color);
+            z-index: 10;
+            transition: transform 0.1s;
+        }
+
+        .coin {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--coin-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--coin-color);
+            z-index: 5;
+        }
+
+        .obstacle {
+            position: absolute;
+            background: var(--obstacle-color);
+            border-radius: 8px;
+            z-index: 5;
+        }
+
+        .enemy {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--enemy-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--enemy-color);
+            z-index: 6;
+        }
+
+        .powerup {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: var(--powerup-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--powerup-color);
+            z-index: 7;
+            animation: float 2s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #hud {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-size: 18px;
+            z-index: 20;
+            display: flex;
+            gap: 20px;
+        }
+
+        #level-display {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 18px;
+            z-index: 20;
+        }
+
+        #deepseek-message {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 28px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            animation: pulse 1.5s infinite;
+            z-index: 20;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        #game-over, #level-up {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 30;
+            display: none;
+        }
+
+        #game-over h1, #level-up h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        #final-score, #level-text {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            font-size: 18px;
+            background: var(--player-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--player-color);
+        }
+
+        #joystick {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: none;
+            z-index: 25;
+        }
+
+        #joystick-knob {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            top: 30px;
+            left: 30px;
+            transition: transform 0.1s;
+        }
+
+        @media (max-width: 800px) {
+            #game-container {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+            }
+
+            #joystick {
+                display: block;
+            }
+        }
+
+        .explosion {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(255,200,0,0.8) 0%, rgba(255,100,0,0.5) 70%, transparent 100%);
+            border-radius: 50%;
+            z-index: 15;
+            animation: explode 0.5s forwards;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="player"></div>
+        <div id="hud">
+            <div id="score-display">🌟 <span id="score">0</span></div>
+            <div id="lives-display">❤️ <span id="lives">3</span></div>
+            <div id="powerup-timer">⚡ <span id="powerup-time">0</span>s</div>
+        </div>
+        <div id="level-display">Nível: <span id="level">1</span></div>
+        <div id="deepseek-message">🚀 DeepSeek é INCRÍVEL! 🚀</div>
+        
+        <div id="joystick">
+            <div id="joystick-knob"></div>
+        </div>
+        
+        <div id="game-over">
+            <h1>Game Over!</h1>
+            <p id="final-score">Pontuação: 0</p>
+            <button id="restart-btn" class="btn">Jogar Novamente</button>
+        </div>
+        
+        <div id="level-up">
+            <h1>Nível Up!</h1>
+            <p id="level-text">Você alcançou o nível 2!</p>
+            <button id="continue-btn" class="btn">Continuar</button>
+        </div>
+    </div>
+
+    <script>
+        // Elementos do jogo
+        const gameContainer = document.getElementById('game-container');
+        const player = document.getElementById('player');
+        const scoreDisplay = document.getElementById('score');
+        const livesDisplay = document.getElementById('lives');
+        const powerupTimer = document.getElementById('powerup-time');
+        const levelDisplay = document.getElementById('level');
+        const gameOverScreen = document.getElementById('game-over');
+        const finalScoreDisplay = document.getElementById('final-score');
+        const restartBtn = document.getElementById('restart-btn');
+        const levelUpScreen = document.getElementById('level-up');
+        const levelText = document.getElementById('level-text');
+        const continueBtn = document.getElementById('continue-btn');
+        const deepseekMessage = document.getElementById('deepseek-message');
+        const joystick = document.getElementById('joystick');
+        const joystickKnob = document.getElementById('joystick-knob');
+
+        // Variáveis do jogo
+        let score = 0;
+        let lives = 3;
+        let level = 1;
+        let gameRunning = true;
+        let playerX = 375;
+        let playerY = 275;
+        let playerSpeed = 5;
+        let coins = [];
+        let obstacles = [];
+        let enemies = [];
+        let powerups = [];
+        let explosions = [];
+        let keys = {};
+        let gameSpeed = 1;
+        let coinSpawnInterval = 1500;
+        let obstacleSpawnInterval = 2500;
+        let enemySpawnInterval = 4000;
+        let powerupSpawnInterval = 10000;
+        let lastCoinSpawn = 0;
+        let lastObstacleSpawn = 0;
+        let lastEnemySpawn = 0;
+        let lastPowerupSpawn = 0;
+        let powerupActive = false;
+        let powerupEndTime = 0;
+        let powerupType = null;
+        let animationId;
+        let joystickActive = false;
+        let joystickAngle = 0;
+        let joystickDistance = 0;
+
+        // Tipos de power-ups
+        const POWERUP_TYPES = {
+            SHIELD: 'shield',
+            DOUBLE_POINTS: 'double_points',
+            SLOW_TIME: 'slow_time',
+            KILL_ALL: 'kill_all'
+        };
+
+        // Configurações iniciais
+        function init() {
+            // Posição inicial do jogador
+            playerX = gameContainer.offsetWidth / 2 - player.offsetWidth / 2;
+            playerY = gameContainer.offsetHeight / 2 - player.offsetHeight / 2;
+            updatePlayerPosition();
+            
+            // Event listeners
+            document.addEventListener('keydown', handleKeyDown);
+            document.addEventListener('keyup', handleKeyUp);
+            
+            // Controles touch para mobile
+            setupTouchControls();
+            
+            // Botões
+            restartBtn.addEventListener('click', restartGame);
+            continueBtn.addEventListener('click', continueGame);
+            
+            // Iniciar o jogo
+            startGame();
+        }
+
+        function startGame() {
+            gameRunning = true;
+            lastCoinSpawn = performance.now();
+            lastObstacleSpawn = performance.now();
+            lastEnemySpawn = performance.now();
+            lastPowerupSpawn = performance.now();
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        // Loop principal do jogo
+        function gameLoop(timestamp) {
+            if (!gameRunning) return;
+            
+            updatePlayer();
+            updateCoins();
+            updateObstacles();
+            updateEnemies();
+            updatePowerups();
+            updateExplosions();
+            checkCollisions();
+            updatePowerupTimer(timestamp);
+            
+            // Spawn de objetos
+            if (timestamp - lastCoinSpawn > coinSpawnInterval) {
+                spawnCoin();
+                lastCoinSpawn = timestamp;
+            }
+            
+            if (timestamp - lastObstacleSpawn > obstacleSpawnInterval) {
+                spawnObstacle();
+                lastObstacleSpawn = timestamp;
+            }
+            
+            if (timestamp - lastEnemySpawn > enemySpawnInterval) {
+                spawnEnemy();
+                lastEnemySpawn = timestamp;
+            }
+            
+            if (timestamp - lastPowerupSpawn > powerupSpawnInterval && !powerupActive) {
+                spawnPowerup();
+                lastPowerupSpawn = timestamp;
+            }
+            
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        // Atualizar posição do jogador
+        function updatePlayer() {
+            let dx = 0;
+            let dy = 0;
+            
+            // Controles de teclado
+            if (keys['ArrowLeft'] || keys['a']) dx = -1;
+            if (keys['ArrowRight'] || keys['d']) dx = 1;
+            if (keys['ArrowUp'] || keys['w']) dy = -1;
+            if (keys['ArrowDown'] || keys['s']) dy = 1;
+            
+            // Controle por joystick
+            if (joystickActive) {
+                dx = Math.cos(joystickAngle) * joystickDistance / 30;
+                dy = Math.sin(joystickAngle) * joystickDistance / 30;
+            }
+            
+            // Normalizar movimento diagonal
+            if (dx !== 0 && dy !== 0) {
+                const len = Math.sqrt(dx * dx + dy * dy);
+                dx /= len;
+                dy /= len;
+            }
+            
+            // Aplicar movimento
+            playerX += dx * playerSpeed * gameSpeed;
+            playerY += dy * playerSpeed * gameSpeed;
+            
+            // Limitar às bordas
+            playerX = Math.max(0, Math.min(gameContainer.offsetWidth - player.offsetWidth, playerX));
+            playerY = Math.max(0, Math.min(gameContainer.offsetHeight - player.offsetHeight, playerY));
+            
+            updatePlayerPosition();
+            
+            // Efeito visual ao se mover
+            if (dx !== 0 || dy !== 0) {
+                player.style.transform = `scale(1.1) rotate(${dx * 15}deg)`;
+            } else {
+                player.style.transform = 'scale(1) rotate(0)';
+            }
+        }
+
+        function updatePlayerPosition() {
+            player.style.left = playerX + 'px';
+            player.style.top = playerY + 'px';
+        }
+
+        // Criar uma nova moeda
+        function spawnCoin() {
+            const coin = document.createElement('div');
+            coin.className = 'coin';
+            
+            const x = Math.random() * (gameContainer.offsetWidth - 30);
+            const y = Math.random() * (gameContainer.offsetHeight - 30);
+            
+            coin.style.left = x + 'px';
+            coin.style.top = y + 'px';
+            
+            gameContainer.appendChild(coin);
+            coins.push({
+                element: coin,
+                x: x,
+                y: y,
+                value: 1
+            });
+        }
+
+        // Criar um novo obstáculo
+        function spawnObstacle() {
+            const obstacle = document.createElement('div');
+            obstacle.className = 'obstacle';
+            
+            const width = 40 + Math.random() * 60;
+            const height = 40 + Math.random() * 60;
+            const x = Math.random() * (gameContainer.offsetWidth - width);
+            const y = Math.random() * (gameContainer.offsetHeight - height);
+            
+            obstacle.style.width = width + 'px';
+            obstacle.style.height = height + 'px';
+            obstacle.style.left = x + 'px';
+            obstacle.style.top = y + 'px';
+            
+            // Tornar alguns obstáculos móveis
+            const isMoving = Math.random() > 0.6;
+            let dx = 0, dy = 0;
+            
+            if (isMoving) {
+                dx = (Math.random() - 0.5) * 3 * gameSpeed;
+                dy = (Math.random() - 0.5) * 3 * gameSpeed;
+            }
+            
+            gameContainer.appendChild(obstacle);
+            obstacles.push({
+                element: obstacle,
+                x: x,
+                y: y,
+                width: width,
+                height: height,
+                isMoving: isMoving,
+                dx: dx,
+                dy: dy
+            });
+        }
+
+        // Criar um novo inimigo
+        function spawnEnemy() {
+            const enemy = document.createElement('div');
+            enemy.className = 'enemy';
+            
+            // Posição inicial (fora da tela)
+            let x, y;
+            if (Math.random() > 0.5) {
+                x = Math.random() > 0.5 ? -40 : gameContainer.offsetWidth;
+                y = Math.random() * gameContainer.offsetHeight;
+            } else {
+                x = Math.random() * gameContainer.offsetWidth;
+                y = Math.random() > 0.5 ? -40 : gameContainer.offsetHeight;
+            }
+            
+            // Direção para perseguir o jogador
+            const angle = Math.atan2(playerY - y, playerX - x);
+            const speed = 1 + Math.random() * 2 * gameSpeed;
+            const dx = Math.cos(angle) * speed;
+            const dy = Math.sin(angle) * speed;
+            
+            enemy.style.left = x + 'px';
+            enemy.style.top = y + 'px';
+            
+            gameContainer.appendChild(enemy);
+            enemies.push({
+                element: enemy,
+                x: x,
+                y: y,
+                dx: dx,
+                dy: dy,
+                speed: speed,
+                health: 1
+            });
+        }
+
+        // Criar um power-up
+        function spawnPowerup() {
+            const powerup = document.createElement('div');
+            powerup.className = 'powerup';
+            
+            const x = Math.random() * (gameContainer.offsetWidth - 25);
+            const y = Math.random() * (gameContainer.offsetHeight - 25);
+            
+            // Escolher tipo aleatório de power-up
+            const types = Object.values(POWERUP_TYPES);
+            const type = types[Math.floor(Math.random() * types.length)];
+            
+            // Estilo visual diferente para cada tipo
+            switch(type) {
+                case POWERUP_TYPES.SHIELD:
+                    powerup.style.background = 'radial-gradient(circle, var(--powerup-color) 0%, #3F51B5 100%)';
+                    break;
+                case POWERUP_TYPES.DOUBLE_POINTS:
+                    powerup.style.background = 'radial-gradient(circle, var(--powerup-color) 0%, #FFC107 100%)';
+                    break;
+                case POWERUP_TYPES.SLOW_TIME:
+                    powerup.style.background = 'radial-gradient(circle, var(--powerup-color) 0%, #8BC34A 100%)';
+                    break;
+                case POWERUP_TYPES.KILL_ALL:
+                    powerup.style.background = 'radial-gradient(circle, var(--powerup-color) 0%, #FF5722 100%)';
+                    break;
+            }
+            
+            powerup.style.left = x + 'px';
+            powerup.style.top = y + 'px';
+            
+            gameContainer.appendChild(powerup);
+            powerups.push({
+                element: powerup,
+                x: x,
+                y: y,
+                type: type
+            });
+        }
+
+        // Atualizar moedas
+        function updateCoins() {
+            // Efeito visual de rotação
+            coins.forEach(coin => {
+                const rotation = parseInt(coin.element.style.transform?.replace('rotate(', '').replace('deg)', '') || 0);
+                coin.element.style.transform = `rotate(${rotation + 3}deg)`;
+            });
+        }
+
+        // Atualizar obstáculos
+        function updateObstacles() {
+            obstacles.forEach(obstacle => {
+                if (obstacle.isMoving) {
+                    obstacle.x += obstacle.dx;
+                    obstacle.y += obstacle.dy;
+                    
+                    // Rebater nas bordas
+                    if (obstacle.x <= 0 || obstacle.x + obstacle.width >= gameContainer.offsetWidth) {
+                        obstacle.dx *= -1;
+                    }
+                    if (obstacle.y <= 0 || obstacle.y + obstacle.height >= gameContainer.offsetHeight) {
+                        obstacle.dy *= -1;
+                    }
+                    
+                    obstacle.element.style.left = obstacle.x + 'px';
+                    obstacle.element.style.top = obstacle.y + 'px';
+                }
+            });
+        }
+
+        // Atualizar inimigos
+        function updateEnemies() {
+            enemies.forEach(enemy => {
+                // Perseguir o jogador
+                const angle = Math.atan2(playerY - enemy.y, playerX - enemy.x);
+                enemy.dx = Math.cos(angle) * enemy.speed;
+                enemy.dy = Math.sin(angle) * enemy.speed;
+                
+                enemy.x += enemy.dx;
+                enemy.y += enemy.dy;
+                
+                enemy.element.style.left = enemy.x + 'px';
+                enemy.element.style.top = enemy.y + 'px';
+                
+                // Rotação visual
+                enemy.element.style.transform = `rotate(${angle}rad)`;
+            });
+        }
+
+        // Atualizar power-ups
+        function updatePowerups() {
+            powerups.forEach(powerup => {
+                // Pulsação visual
+                const scale = 0.9 + Math.sin(performance.now() / 300) * 0.1;
+                powerup.element.style.transform = `scale(${scale})`;
+            });
+        }
+
+        // Criar efeito de explosão
+        function createExplosion(x, y) {
+            const explosion = document.createElement('div');
+            explosion.className = 'explosion';
+            explosion.style.left = (x - 30) + 'px';
+            explosion.style.top = (y - 30) + 'px';
+            gameContainer.appendChild(explosion);
+            
+            explosions.push({
+                element: explosion,
+                startTime: performance.now()
+            });
+        }
+
+        // Atualizar explosões
+        function updateExplosions() {
+            explosions.forEach((explosion, index) => {
+                if (performance.now() - explosion.startTime > 500) {
+                    gameContainer.removeChild(explosion.element);
+                    explosions.splice(index, 1);
+                }
+            });
+        }
+
+        // Verificar colisões
+        function checkCollisions() {
+            // Verificar colisão com moedas
+            coins.forEach((coin, index) => {
+                const distance = Math.sqrt(
+                    Math.pow(playerX + 25 - (coin.x + 15), 2) + 
+                    Math.pow(playerY + 25 - (coin.y + 15), 2)
+                );
+                
+                if (distance < 40) { // Raio do jogador + raio da moeda
+                    // Coletar moeda
+                    gameContainer.removeChild(coin.element);
+                    coins.splice(index, 1);
+                    
+                    // Pontuação baseada no power-up ativo
+                    let points = coin.value;
+                    if (powerupActive && powerupType === POWERUP_TYPES.DOUBLE_POINTS) {
+                        points *= 2;
+                    }
+                    
+                    score += points;
+                    scoreDisplay.textContent = score;
+                    
+                    // Efeitos
+                    createExplosion(coin.x + 15, coin.y + 15);
+                    vibrate(50);
+                    flashPlayer('gold');
+                    
+                    // Verificar se subiu de nível
+                    checkLevelUp();
+                }
+            });
+            
+            // Verificar colisão com power-ups
+            powerups.forEach((powerup, index) => {
+                const distance = Math.sqrt(
+                    Math.pow(playerX + 25 - (powerup.x + 12.5), 2) + 
+                    Math.pow(playerY + 25 - (powerup.y + 12.5), 2)
+                );
+                
+                if (distance < 37.5) {
+                    // Coletar power-up
+                    gameContainer.removeChild(powerup.element);
+                    powerups.splice(index, 1);
+                    
+                    // Ativar power-up
+                    activatePowerup(powerup.type);
+                    
+                    // Efeitos
+                    createExplosion(powerup.x + 12.5, powerup.y + 12.5);
+                    vibrate(100);
+                    flashPlayer('cyan');
+                }
+            });
+            
+            // Verificar colisão com obstáculos e inimigos (a menos que tenha escudo)
+            if (!powerupActive || powerupType !== POWERUP_TYPES.SHIELD) {
+                // Colisão com obstáculos
+                obstacles.forEach(obstacle => {
+                    const playerCenterX = playerX + 25;
+                    const playerCenterY = playerY + 25;
+                    const obstacleCenterX = obstacle.x + obstacle.width / 2;
+                    const obstacleCenterY = obstacle.y + obstacle.height / 2;
+                    
+                    const distanceX = Math.abs(playerCenterX - obstacleCenterX) - obstacle.width / 2;
+                    const distanceY = Math.abs(playerCenterY - obstacleCenterY) - obstacle.height / 2;
+                    
+                    if (distanceX < 25 && distanceY < 25) {
+                        // Colisão ocorreu
+                        takeDamage();
+                    }
+                });
+                
+                // Colisão com inimigos
+                enemies.forEach((enemy, index) => {
+                    const distance = Math.sqrt(
+                        Math.pow(playerX + 25 - (enemy.x + 20), 2) + 
+                        Math.pow(playerY + 25 - (enemy.y + 20), 2)
+                    );
+                    
+                    if (distance < 45) {
+                        // Colisão ocorreu
+                        takeDamage();
+                        
+                        // Inimigo também é destruído
+                        createExplosion(enemy.x + 20, enemy.y + 20);
+                        gameContainer.removeChild(enemy.element);
+                        enemies.splice(index, 1);
+                    }
+                });
+            }
+            
+            // Se o power-up for "matar todos", verificar colisão com inimigos para destruí-los
+            if (powerupActive && powerupType === POWERUP_TYPES.KILL_ALL) {
+                enemies.forEach((enemy, index) => {
+                    const distance = Math.sqrt(
+                        Math.pow(playerX + 25 - (enemy.x + 20), 2) + 
+                        Math.pow(playerY + 25 - (enemy.y + 20), 2)
+                    );
+                    
+                    if (distance < 100) { // Raio maior para o efeito "matar todos"
+                        // Destruir inimigo
+                        createExplosion(enemy.x + 20, enemy.y + 20);
+                        gameContainer.removeChild(enemy.element);
+                        enemies.splice(index, 1);
+                        
+                        // Pontos extras
+                        score += 5;
+                        scoreDisplay.textContent = score;
+                        
+                        // Efeitos
+                        vibrate(30);
+                    }
+                });
+            }
+        }
+
+        // Ativar power-up
+        function activatePowerup(type) {
+            powerupActive = true;
+            powerupType = type;
+            powerupEndTime = performance.now() + 10000; // 10 segundos
+            
+            // Efeitos visuais
+            switch(type) {
+                case POWERUP_TYPES.SHIELD:
+                    player.style.boxShadow = '0 0 20px #3F51B5';
+                    deepseekMessage.textContent = '🛡️ Escudo Ativado! DeepSeek é PROTEGIDO! 🛡️';
+                    break;
+                case POWERUP_TYPES.DOUBLE_POINTS:
+                    player.style.boxShadow = '0 0 20px #FFC107';
+                    deepseekMessage.textContent = '💰 Pontos Dobrados! DeepSeek é VALIOSO! 💰';
+                    break;
+                case POWERUP_TYPES.SLOW_TIME:
+                    player.style.boxShadow = '0 0 20px #8BC34A';
+                    deepseekMessage.textContent = '⏳ Tempo Lento! DeepSeek é RÁPIDO! ⏳';
+                    gameSpeed = 0.5;
+                    break;
+                case POWERUP_TYPES.KILL_ALL:
+                    player.style.boxShadow = '0 0 20px #FF5722';
+                    deepseekMessage.textContent = '💥 PODER SUPREMO! DeepSeek é INVENCÍVEL! 💥';
+                    break;
+            }
+            
+            // Resetar animação da mensagem
+            deepseekMessage.style.animation = 'none';
+            void deepseekMessage.offsetWidth; // Trigger reflow
+            deepseekMessage.style.animation = 'pulse 0.7s infinite';
+        }
+
+        // Desativar power-up
+        function deactivatePowerup() {
+            powerupActive = false;
+            powerupType = null;
+            gameSpeed = level * 0.5 + 0.5; // Voltar à velocidade normal do nível
+            
+            // Resetar efeitos visuais
+            player.style.boxShadow = '0 0 15px var(--player-color)';
+            updateDeepseekMessage();
+        }
+
+        // Atualizar temporizador do power-up
+        function updatePowerupTimer(timestamp) {
+            if (powerupActive) {
+                const remaining = Math.ceil((powerupEndTime - timestamp) / 1000);
+                powerupTimer.textContent = remaining > 0 ? remaining : 0;
+                
+                if (timestamp > powerupEndTime) {
+                    deactivatePowerup();
+                }
+            } else {
+                powerupTimer.textContent = '0';
+            }
+        }
+
+        // Levar dano
+        function takeDamage() {
+            // Se estiver com escudo, não leva dano
+            if (powerupActive && powerupType === POWERUP_TYPES.SHIELD) {
+                // Efeito visual
+                flashPlayer('#3F51B5');
+                vibrate(50);
+                return;
+            }
+            
+            lives--;
+            livesDisplay.textContent = lives;
+            
+            // Efeitos
+            flashPlayer('red');
+            vibrate(200);
+            createExplosion(playerX + 25, playerY + 25);
+            
+            // Verificar game over
+            if (lives <= 0) {
+                gameOver();
+            }
+        }
+
+        // Verificar se subiu de nível
+        function checkLevelUp() {
+            const pointsNeeded = level * 10;
+            if (score >= pointsNeeded) {
+                levelUp();
+            }
+        }
+
+        // Subir de nível
+        function levelUp() {
+            level++;
+            levelDisplay.textContent = level;
+            
+            // Aumentar dificuldade
+            gameSpeed = level * 0.5 + 0.5;
+            coinSpawnInterval = Math.max(500, 1500 - level * 100);
+            obstacleSpawnInterval = Math.max(1000, 2500 - level * 150);
+            enemySpawnInterval = Math.max(1500, 4000 - level * 200);
+            
+            // Mostrar tela de level up
+            gameRunning = false;
+            levelText.textContent = `Você alcançou o nível ${level}!`;
+            levelUpScreen.style.display = 'flex';
+            
+            // Efeitos
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    createExplosion(
+                        Math.random() * gameContainer.offsetWidth,
+                        Math.random() * gameContainer.offsetHeight
+                    );
+                }, i * 200);
+            }
+            
+            vibrate([100, 50, 100, 50, 100]);
+            updateDeepseekMessage();
+        }
+
+        // Continuar após level up
+        function continueGame() {
+            levelUpScreen.style.display = 'none';
+            gameRunning = true;
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        // Game over
+        function gameOver() {
+            gameRunning = false;
+            cancelAnimationFrame(animationId);
+            
+            finalScoreDisplay.textContent = `Pontuação: ${score} (Nível ${level})`;
+            gameOverScreen.style.display = 'flex';
+            
+            // Efeitos
+            player.style.backgroundColor = 'red';
+            player.style.boxShadow = '0 0 20px red';
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createExplosion(
+                        Math.random() * gameContainer.offsetWidth,
+                        Math.random() * gameContainer.offsetHeight
+                    );
+                }, i * 100);
+            }
+            
+            vibrate([200, 100, 200, 100, 200]);
+            
+            // Mensagem final
+            if (score > 50) {
+                deepseekMessage.textContent = '🌟 INCRÍVEL! DeepSeek é ÉPICO! 🌟';
+            } else if (score > 20) {
+                deepseekMessage.textContent = '🎉 BOA! DeepSeek é DEMONÍACO! 🎉';
+            } else {
+                deepseekMessage.textContent = '😢 Tente novamente! DeepSeek acredita em você! 😢';
+            }
+        }
+
+        // Reiniciar o jogo
+        function restartGame() {
+            // Limpar todos os elementos
+            coins.forEach(coin => gameContainer.removeChild(coin.element));
+            obstacles.forEach(obstacle => gameContainer.removeChild(obstacle.element));
+            enemies.forEach(enemy => gameContainer.removeChild(enemy.element));
+            powerups.forEach(powerup => gameContainer.removeChild(powerup.element));
+            explosions.forEach(explosion => gameContainer.removeChild(explosion.element));
+            
+            // Resetar arrays
+            coins = [];
+            obstacles = [];
+            enemies = [];
+            powerups = [];
+            explosions = [];
+            
+            // Resetar variáveis
+            score = 0;
+            lives = 3;
+            level = 1;
+            gameRunning = true;
+            gameSpeed = 1;
+            coinSpawnInterval = 1500;
+            obstacleSpawnInterval = 2500;
+            enemySpawnInterval = 4000;
+            powerupActive = false;
+            
+            // Resetar displays
+            scoreDisplay.textContent = score;
+            livesDisplay.textContent = lives;
+            levelDisplay.textContent = level;
+            powerupTimer.textContent = '0';
+            
+            // Resetar jogador
+            playerX = gameContainer.offsetWidth / 2 - player.offsetWidth / 2;
+            playerY = gameContainer.offsetHeight / 2 - player.offsetHeight / 2;
+            updatePlayerPosition();
+            player.style.backgroundColor = 'var(--player-color)';
+            player.style.boxShadow = '0 0 15px var(--player-color)';
+            player.style.transform = 'scale(1)';
+            
+            // Esconder telas
+            gameOverScreen.style.display = 'none';
+            levelUpScreen.style.display = 'none';
+            
+            // Resetar mensagem
+            updateDeepseekMessage();
+            
+            // Reiniciar o jogo
+            startGame();
+        }
+
+        // Atualizar mensagem do DeepSeek
+        function updateDeepseekMessage() {
+            const messages = [
+                "🚀 DeepSeek é INCRÍVEL! 🚀",
+                "🌟 DeepSeek é O MELHOR! 🌟",
+                "💡 DeepSeek é GENIAL! 💡",
+                "⚡ DeepSeek é RÁPIDO! ⚡",
+                "🎯 DeepSeek é PRECISO! 🎯"
+            ];
+            
+            deepseekMessage.textContent = messages[Math.floor(Math.random() * messages.length)];
+            deepseekMessage.style.animation = 'pulse 1.5s infinite';
+        }
+
+        // Efeito de flash no jogador
+        function flashPlayer(color) {
+            player.style.backgroundColor = color;
+            setTimeout(() => {
+                player.style.backgroundColor = 'var(--player-color)';
+            }, 200);
+        }
+
+        // Efeito de vibração
+        function vibrate(pattern) {
+            if (navigator.vibrate) {
+                navigator.vibrate(pattern);
+            }
+        }
+
+        // Configurar controles touch
+        function setupTouchControls() {
+            let joystickStartX = 0;
+            let joystickStartY = 0;
+            
+            joystick.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = joystick.getBoundingClientRect();
+                joystickStartX = rect.left + rect.width / 2;
+                joystickStartY = rect.top + rect.height / 2;
+                joystickActive = true;
+                updateJoystick(touch.clientX, touch.clientY);
+            });
+            
+            document.addEventListener('touchmove', (e) => {
+                if (joystickActive) {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    updateJoystick(touch.clientX, touch.clientY);
+                }
+            }, { passive: false });
+            
+            document.addEventListener('touchend', () => {
+                joystickActive = false;
+                joystickKnob.style.transform = 'translate(0, 0)';
+            });
+            
+            function updateJoystick(touchX, touchY) {
+                const dx = touchX - joystickStartX;
+                const dy = touchY - joystickStartY;
+                const distance = Math.min(30, Math.sqrt(dx * dx + dy * dy));
+                joystickAngle = Math.atan2(dy, dx);
+                joystickDistance = distance;
+                
+                joystickKnob.style.transform = `translate(${dx * distance / 30}px, ${dy * distance / 30}px)`;
+            }
+        }
+
+        // Manipuladores de teclado
+        function handleKeyDown(e) {
+            keys[e.key] = true;
+            
+            // Tecla R para reiniciar
+            if (e.key === 'r') {
+                restartGame();
+            }
+            
+            // Tecla P para pausar
+            if (e.key === 'p') {
+                if (gameRunning) {
+                    gameRunning = false;
+                    cancelAnimationFrame(animationId);
+                    deepseekMessage.textContent = "⏸️ Jogo Pausado! DeepSeek espera... ⏸️";
+                } else {
+                    gameRunning = true;
+                    deepseekMessage.textContent = "▶️ Jogo Retomado! DeepSeek volta à ação! ▶️";
+                    animationId = requestAnimationFrame(gameLoop);
+                }
+            }
+        }
+
+        function handleKeyUp(e) {
+            keys[e.key] = false;
+        }
+
+        // Iniciar o jogo quando a página carregar
+        window.onload = init;
+    </script>
+</body>
+</html>

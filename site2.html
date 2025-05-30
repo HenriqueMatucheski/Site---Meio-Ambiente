@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProjectEco | Revolução Sustentável</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Playfair+Display:wght@700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="site2.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <a href="#" class="logo">
+                <i class="fas fa-recycle logo-icon"></i>
+                ProjetoEco
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="hg.html">Históricos de Queimadas</a></li>
+                <li><a href="aquecimento_global_timeline_v2.html">Aquecimento Global</li>
+                <li><a href="terra_viva.html">Meio Ambiente</a></li>
+                <li><a href="kjdfs.html">Separação de Residuos</a></li>
+                <li><a href="index.html">Projeto Game</a></li>
+            </ul>
+            
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Aprenda a Separar Corretamente seu Lixo</h1>
+            <p>Descubra como fazer a separação adequada dos resíduos e contribuir para um planeta mais sustentável. Guia completo com dicas práticas e ferramentas interativas.</p>
+            <div class="hero-buttons">
+                <a href="#tipos" class="cta-button" onclick="scrollToSection('tipos')">
+                    <i class="fas fa-play"></i>
+                    Começar Agora
+                </a>
+                <a href="#quiz" class="secondary-button" onclick="scrollToSection('quiz')">
+                    <i class="fas fa-brain"></i>
+                    Testar Conhecimento
+                </a>
+            </div>
+        </div>
+        
+        <div class="hero-image-container">
+            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Lixeiras coloridas para separação de resíduos" class="hero-image">
+        </div>
+        
+        <div class="impact-counter">
+            <div class="impact-item">
+                <div class="impact-number" id="recyclingRate">78</div>
+                <div class="impact-label">Taxa de Reciclagem (%)</div>
+            </div>
+            <div class="impact-item">
+                <div class="impact-number" id="co2Reduction">-40</div>
+                <div class="impact-label">Redução CO₂ (%)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tipos de Resíduos -->
+    <section id="tipos" class="waste-types">
+        <div class="section-header">
+            <h2>Tipos de Resíduos</h2>
+            <p>Conheça os diferentes tipos de lixo e aprenda onde descartar cada um corretamente</p>
+        </div>
+        
+        <div class="waste-grid" id="wasteGrid">
+            <!-- Conteúdo será inserido via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Quiz Interativo -->
+    <section id="quiz" class="quiz-section">
+        <div class="section-header">
+            <h2>Quiz de Separação</h2>
+            <p>Teste seus conhecimentos sobre separação de lixo</p>
+        </div>
+        
+        <div class="quiz-container">
+            <div id="quizContent">
+                <!-- Conteúdo do quiz será inserido via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculadora de Impacto -->
+    <section id="calculadora" class="calculator-section">
+        <div class="section-header">
+            <h2>Calculadora de Impacto</h2>
+            <p>Descubra o impacto ambiental dos seus hábitos de reciclagem</p>
+        </div>
+        
+        <div class="calculator-container">
+            <div class="calculator-input">
+                <h3>Seus Hábitos Semanais</h3>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-bottle-water"></i> Garrafas plásticas por semana</label>
+                    <input type="range" id="plasticSlider" min="0" max="20" value="5" oninput="updateCalculator()">
+                    <span id="plasticValue">5</span>
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-newspaper"></i> Papel/papelão (kg) por semana</label>
+                    <input type="range" id="paperSlider" min="0" max="10" value="2" oninput="updateCalculator()">
+                    <span id="paperValue">2 kg</span>
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-wine-glass"></i> Recipientes de vidro por semana</label>
+                    <input type="range" id="glassSlider" min="0" max="15" value="3" oninput="updateCalculator()">
+                    <span id="glassValue">3</span>
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-cog"></i> Latas de metal por semana</label>
+                    <input type="range" id="metalSlider" min="0" max="10" value="4" oninput="updateCalculator()">
+                    <span id="metalValue">4</span>
+                </div>
+                
+                <button class="cta-button" onclick="calculateImpact()">
+                    <i class="fas fa-calculator"></i>
+                    Calcular Impacto
+                </button>
+            </div>
+            
+            <div class="calculator-results">
+                <h3>Seu Impacto Ambiental</h3>
+                <div class="impact-results" id="impactResults">
+                    <!-- Resultados serão inseridos via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dicas Práticas -->
+    <section id="dicas" class="tips-section">
+        <div class="section-header">
+            <h2>Dicas Práticas</h2>
+            <p>Pequenas ações que fazem grande diferença para o meio ambiente</p>
+        </div>
+        
+        <div class="tips-grid" id="tipsGrid">
+            <!-- Dicas serão inseridas via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Upload de Arquivos -->
+    <section id="upload" class="upload-section">
+        <div class="section-header">
+            
+        </div>
+        
+        <div class="upload-container">
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <i class="fas fa-recycle"></i>
+                    <span>ProjetoEco</span>
+                </div>
+                <p>Educação ambiental para um futuro mais sustentável. Aprenda, pratique e contribua para um planeta melhor.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                
+            </div>
+            
+            <div class="footer-section">
+                
+                
+            </div>
+            
+            <div class="footer-section">
+                
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 ProjetoEco. Todos os direitos reservados. Desenvolvido com 💚 para o meio ambiente.</p>
+        </div>
+    </footer>
+
+    <script src="site2.js"></script>
+</body>
+</html>
